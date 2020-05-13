@@ -1,4 +1,4 @@
-# CodingExercise
+# AltaML Interview Coding Exercise
 
 In this repo, there is a compressed file with a number of text files. Inside the text files, you will see characters such as LLRFLFLF. Imagine you're a turtle starting at 0,0 that needs to follow the directions in the text file. Each letter represents a movement, L means the turtle turns counterclockwise, R means the turtle turns clockwise, and F means forward. Note, turning the turtle only changes the turtle's orientation.
 
