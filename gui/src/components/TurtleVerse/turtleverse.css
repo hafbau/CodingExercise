@@ -1,0 +1,20 @@
+.turtleverse {
+  border: 3px solid #2c3e50;
+  background-color: #e0ffff;
+  min-width: 400px;
+  min-height: 400px;
+  position: relative;
+  transition: all ease 0.5s;
+}
+
+.tiny-dot {
+  position: absolute;
+  padding: 4px;
+}
+
+.tiny-dot > div {
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background-color: red;
+}

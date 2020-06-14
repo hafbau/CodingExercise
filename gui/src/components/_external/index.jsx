@@ -1,4 +1,5 @@
+// import 'react-dropzone-uploader/dist/styles.css';
+// import Dropzone from 'react-dropzone-uploader'
 export { Chart } from 'react-charts'
 
-import 'react-dropzone-uploader/dist/styles.css';
-export { default as Dropzone } from 'react-dropzone-uploader'
+// export { Dropzone }

@@ -1,9 +1,13 @@
 import React from 'react'
+import { Chart } from '../_external'
+import { TurtleVerse } from '../TurtleVerse/TurtleVerse';
 
 export const TurtleTravel = () => {
+  
   return (
-    <div>
-      
-    </div>
-  )
+    <TurtleVerse
+      width={400}
+      height={400}
+    />
+  );
 }
