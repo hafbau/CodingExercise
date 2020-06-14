@@ -6,8 +6,8 @@ export const TurtleTravel = () => {
   
   return (
     <TurtleVerse
-      width={400}
-      height={400}
+      width={960}
+      height={640}
     />
   );
 }
