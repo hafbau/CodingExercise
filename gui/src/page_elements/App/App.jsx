@@ -9,7 +9,6 @@ export const App = () => {
     <div className="App">
       <Header />
       <TurtleTravel />
-      <Uploader />
     </div>
   );
 }
