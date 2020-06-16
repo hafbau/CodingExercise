@@ -1,4 +1,7 @@
-const { createPathTree: defaultPTFactory, createPoint: defaultPointFactory } = require('./helpers');
+const {
+  createPathTree: defaultPTFactory,
+  createPoint: defaultPointFactory
+} = require('./helpers');
 
 const ORIENTATIONS = {
   up: 'up',
@@ -20,15 +23,18 @@ const ORIENTATION_MAP = [
   ORIENTATIONS.left,
 ]
 
-module.exports = (direction, createPoint = defaultPTFactory, createPathTree = defaultPointFactory) => {
+module.exports = (direction, createPathTree = defaultPTFactory, createPoint = defaultPointFactory) => {
   const startingPoint = createPoint([0, 0, ORIENTATIONS.up])
   const turtleTravel = createPathTree(startingPoint);
 
-  for(const move of direction) {
+  for (const move of direction) {
     const currentPos = makeMove(turtleTravel.endPoint.entries, move);
     const hasMoved = move === DIRECTION.forward;
     const point = createPoint(currentPos);
-    turtleTravel.addPoint({ point, hasMoved });
+    turtleTravel.addPoint({
+      point,
+      hasMoved
+    });
   }
   return turtleTravel;
 }
@@ -37,10 +43,22 @@ const makeMove = (startingPoint, move) => {
   let [x, y, orientation] = startingPoint;
   if (move === DIRECTION.forward) {
     switch (orientation) {
-      case ORIENTATIONS.up: { y++; break; }
-      case ORIENTATIONS.right: { x++; break; }
-      case ORIENTATIONS.down: { y--; break; }
-      case ORIENTATIONS.left: { x--; break; }
+      case ORIENTATIONS.up: {
+        y++;
+        break;
+      }
+      case ORIENTATIONS.right: {
+        x++;
+        break;
+      }
+      case ORIENTATIONS.down: {
+        y--;
+        break;
+      }
+      case ORIENTATIONS.left: {
+        x--;
+        break;
+      }
     }
   } else {
     orientation = changeOrientation(orientation, move);
