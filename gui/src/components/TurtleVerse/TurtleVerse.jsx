@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import './turtleverse.css'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./turtleverse.css";
 // import path from './sample.json'
 
-const DefaultTurtle = ({ top, left, color = 'red' }) => {
+const DefaultTurtle = ({ top, left, color = "red" }) => {
   return (
     <div
       style={{
-        borderRadius: '50%',
+        borderRadius: "50%",
         backgroundColor: color,
-        height: '1em',
-        width: '1em',
-        position: 'absolute',
+        height: "1em",
+        width: "1em",
+        position: "absolute",
         zIndex: 10,
         top: top - 8,
         left: left - 8,
@@ -20,60 +20,67 @@ const DefaultTurtle = ({ top, left, color = 'red' }) => {
   );
 };
 
-
 export const TurtleVerse = ({
-         height,
-         width,
-         turtle: Turtle = DefaultTurtle,
-         path = [],
-         grid: {
-           height: gridHeight = 1,
-           width: gridWidth = 1,
-           maxY = 0.5,
-           minX = 0.5,
-           maxX = 0.5,
-           minY = 0.5,
-         } = {},
-       }) => {
-         const step = height / gridHeight;
-         const zeroTop = step * maxY;
-         const zeroLeft = (width / gridWidth) * Math.abs(minX);
-         console.log("step :>> ", step, zeroLeft, zeroTop);
-        console.log('maxY', maxY);
-        console.log('minX', minX);
-        console.log('maxX', maxX);
-        console.log('minY', minY);
-         const [{ top, left }, setCoord] = useState({
-           top: zeroTop,
-           left: zeroLeft,
-         });
-         const [visitedTrail, setVisitedTrail] = useState([]);
+  height,
+  width,
+  turtle: Turtle = DefaultTurtle,
+  path = [],
+  grid: {
+    height: gridHeight = 1,
+    width: gridWidth = 1,
+    maxY = 0.5,
+    minX = 0.5,
+    maxX = 0.5,
+    minY = 0.5,
+  } = {},
+}) => {
+  const step = Math.floor(height / gridHeight);
+  const originFromTop = (height / gridHeight) * maxY;
+  const originFromLeft = (width / gridWidth) * Math.abs(minX);
+  console.log("step :>> ", step, originFromLeft, originFromTop);
+  console.log("maxY", maxY);
+  console.log("minX", minX);
+  console.log("maxX", maxX);
+  console.log("minY", minY);
+  console.log("gridHeight", gridHeight);
+  console.log("gridWidth", gridWidth);
+  const [{ top, left }, setCoord] = useState({
+    top: originFromTop,
+    left: originFromLeft,
+  });
+  const [visitedTrail, setVisitedTrail] = useState([]);
 
-         useEffect(() => {
-           const visitedTrail = path.map(([x, y], idx) => {
-             x = x * step;
-             y = y * step;
-             setCoord({ top: zeroTop + x, left: zeroLeft + y });
-             return (
-               <div
-                 key={`${top}${left}-${idx}`}
-                 className="tiny-dot"
-                 style={{ top: zeroTop + x - 2, left: zeroLeft + y - 2 }}
-               >
-                 <div></div>
-               </div>
-             );
-           });
+  useEffect(() => {
+    const visitedTrail = path.map(([xCoord, yCoord], idx) => {
+      const x = xCoord * step;
+      const y = yCoord * step;
+      const ydistanceFromOrigin = originFromTop - y;
+      const xdistanceFromOrigin = originFromLeft + x;
 
-           setVisitedTrail(visitedTrail);
-         }, [path.length]);
-         return (
-           <div className="turtleverse" style={{ height, width }}>
-             <Turtle top={zeroTop} left={zeroLeft} color="#ff000080" />
-             <Turtle top={top} left={left} />
-             <div className="zero-x" style={{ top: zeroTop }} />
-             <div className="zero-y" style={{ left: zeroLeft }} />
-             {visitedTrail}
-           </div>
-         );
-       };
+      setCoord({ top: ydistanceFromOrigin, left: xdistanceFromOrigin });
+      return (
+        <div
+          key={`${top}${left}-${idx}`}
+          className="tiny-dot"
+          style={{
+            top: ydistanceFromOrigin - 2,
+            left: xdistanceFromOrigin - 2,
+          }}
+        >
+          <div></div>
+        </div>
+      );
+    });
+
+    setVisitedTrail(visitedTrail);
+  }, [path.length]);
+  return (
+    <div className="turtleverse" style={{ height, width }}>
+      <Turtle top={originFromTop} left={originFromLeft} color="#ff000080" />
+      <Turtle top={top} left={left} />
+      <div className="zero-x" style={{ top: originFromTop }} />
+      <div className="zero-y" style={{ left: originFromLeft }} />
+      {visitedTrail}
+    </div>
+  );
+};
