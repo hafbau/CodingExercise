@@ -58,7 +58,18 @@ export const TurtleVerse = ({
       const xdistanceFromOrigin = originFromLeft + x;
 
       setCoord({ top: ydistanceFromOrigin, left: xdistanceFromOrigin });
-      return `L ${xdistanceFromOrigin},${ydistanceFromOrigin}`;
+      return (
+        <div
+          key={`${top}${left}-${idx}`}
+          className="tiny-dot"
+          style={{
+            top: ydistanceFromOrigin - 2,
+            left: xdistanceFromOrigin - 2,
+          }}
+        >
+          <div></div>
+        </div>
+      );
     });
 
     setVisitedTrail(visitedTrail);
@@ -69,14 +80,7 @@ export const TurtleVerse = ({
       <Turtle top={top} left={left} />
       <div className="zero-x" style={{ top: originFromTop }} />
       <div className="zero-y" style={{ left: originFromLeft }} />
-      <svg viewBox={`0 0 ${width} ${height}`}>
-        <path
-          d={`m ${originFromLeft},${originFromTop} ${visitedTrail.join(" ")}`}
-          fill="transparent"
-          stroke="black"
-          stroke-width="4"
-        ></path>
-      </svg>
+      {visitedTrail}
     </div>
   );
 };
