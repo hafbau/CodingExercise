@@ -29,7 +29,7 @@ async def compute_path(request):
     return JSONResponse({'result': {
         'fullPath': path.full_path,
         'grid': path.grid_props,
-        'revisitedPath': path.revisited_points
+        'revisitedPoints': path.revisited_points
     } })
 
 

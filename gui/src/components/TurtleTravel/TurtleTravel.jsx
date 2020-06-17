@@ -4,7 +4,7 @@ import { Uploader } from '../Uploader';
 import './turtletravel.css'
 
 export const TurtleTravel = () => {
-  const [{ fullPath, grid }, setPathData] = useState({})
+  const [{ fullPath, grid, revisitedPoints }, setPathData] = useState({})
   
   return (
     <section className='turletravel'>
@@ -14,6 +14,7 @@ export const TurtleTravel = () => {
         height={640}
         path={fullPath}
         grid={grid}
+        revisitedPoints={revisitedPoints}
       />
     </section>
   );

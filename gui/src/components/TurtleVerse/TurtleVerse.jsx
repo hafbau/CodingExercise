@@ -25,6 +25,7 @@ export const TurtleVerse = ({
   width,
   turtle: Turtle = DefaultTurtle,
   path = [],
+  revisitedPoints = [],
   grid: {
     height: gridHeight = 1,
     width: gridWidth = 1,
@@ -49,6 +50,7 @@ export const TurtleVerse = ({
     left: originFromLeft,
   });
   const [visitedTrail, setVisitedTrail] = useState([]);
+  const [revisitedTrail, setRevisitedTrail] = useState([]);
 
   useEffect(() => {
     const visitedTrail = path.map(([xCoord, yCoord], idx) => {
@@ -63,13 +65,40 @@ export const TurtleVerse = ({
 
     setVisitedTrail(visitedTrail);
   }, [path.length]);
+
+  useEffect(() => {
+    const revisitedTrail = revisitedPoints.map(([xCoord, yCoord], idx) => {
+      const x = xCoord * step;
+      const y = yCoord * step;
+      const ydistanceFromOrigin = originFromTop - y;
+      const xdistanceFromOrigin = originFromLeft + x;
+
+      // setCoord({ top: ydistanceFromOrigin, left: xdistanceFromOrigin });
+      return (
+        <div
+          key={`${top}${left}-${idx}`}
+          className="tiny-dot"
+          style={{
+            top: ydistanceFromOrigin - 2,
+            left: xdistanceFromOrigin - 2,
+          }}
+        >
+          <div></div>
+        </div>
+      );
+    });
+
+    setRevisitedTrail(revisitedTrail);
+  }, [revisitedPoints.length]);
+
   return (
     <div className="turtleverse" style={{ height, width }}>
       <Turtle top={originFromTop} left={originFromLeft} color="#ff000080" />
       <Turtle top={top} left={left} />
       <div className="zero-x" style={{ top: originFromTop }} />
       <div className="zero-y" style={{ left: originFromLeft }} />
-      <svg viewBox={`0 0 ${width} ${height}`}>
+      {revisitedTrail}
+      <svg className="path" viewBox={`0 0 ${width} ${height}`}>
         <path
           d={`m ${originFromLeft},${originFromTop} ${visitedTrail.join(" ")}`}
           fill="transparent"
