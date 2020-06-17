@@ -34,15 +34,16 @@
   bottom: 0;
   width: 1px;
 }
-/* 
+
 .path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 5s linear forwards;
+  animation: dash 15s linear forwards;
 }
 
 @keyframes dash {
+  from {
+    stroke-dashoffset: 30000;
+  }
   to {
     stroke-dashoffset: 0;
   }
-} */
+}
