@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { DefaultTurtle } from './DefaultTurtle';
+import { PointRevisited } from './PointRevisited';
 import "./turtleverse.css";
 import { useSvgPathAnimation } from '../../hooks/animations';
+import { useTurtleGrid } from '../../hooks/dimensions';
 
+
+//This is used for stroke-dasharray animation
+const ARBITRARILY_LARGE_NUMBER = 30000;
+// size of full path * unit time it takes per second animation time
 export const TurtleVerse = ({
   height,
   width,
   turtle: Turtle = DefaultTurtle,
   path = [],
   revisitedPoints = [],
-  grid: {
-    height: gridHeight = 1,
-    width: gridWidth = 1,
-    maxY = 0.5,
-    minX = 0.5,
-  } = {},
+  grid,
+  animationTime = 15
 }) => {
-  const svgPathRef = useSvgPathAnimation({ dependencies: [path.length]});
-  const step = Math.floor(height / gridHeight);
-  const originFromTop = (height / gridHeight) * maxY;
-  const originFromLeft = (width / gridWidth) * Math.abs(minX);
-
+  const [svgPathRef, pathLength] = useSvgPathAnimation({ dependencies: [path.length]});
+  const {
+    originFromLeft,
+    originFromTop,
+    calculateDistanceFromOrigin
+  } = useTurtleGrid(height, width, grid);
   
   
   const [{ top, left }, setCoord] = useState({
@@ -29,41 +32,30 @@ export const TurtleVerse = ({
   });
 
   const [visitedTrail, setVisitedTrail] = useState([]);
-  const [revisitedTrail, setRevisitedTrail] = useState([]);
-
   useEffect(() => {
-    const visitedTrail = path.map(([xCoord, yCoord], idx) => {
-      const x = xCoord * step;
-      const y = yCoord * step;
-      const ydistanceFromOrigin = originFromTop - y;
-      const xdistanceFromOrigin = originFromLeft + x;
-
+    const visitedTrail = path.map((coord) => {
+      const [xdistanceFromOrigin, ydistanceFromOrigin] = calculateDistanceFromOrigin(coord)
+      
       setCoord({ top: ydistanceFromOrigin, left: xdistanceFromOrigin });
-      return `L ${xdistanceFromOrigin},${ydistanceFromOrigin}`;
+      const svgPathLineCommandForCurrentCoord = `L ${xdistanceFromOrigin},${ydistanceFromOrigin}`;
+      return svgPathLineCommandForCurrentCoord;
     });
-
     setVisitedTrail(visitedTrail);
   }, [path.length]);
 
-  useEffect(() => {
-    const revisitedTrail = revisitedPoints.map(([xCoord, yCoord], idx) => {
-      const x = xCoord * step;
-      const y = yCoord * step;
-      const ydistanceFromOrigin = originFromTop - y;
-      const xdistanceFromOrigin = originFromLeft + x;
 
+  const [revisitedTrail, setRevisitedTrail] = useState([]);
+  useEffect(() => {
+    const revisitedTrail = revisitedPoints.map((coord, idx) => {
+      const [xdistanceFromOrigin, ydistanceFromOrigin] = calculateDistanceFromOrigin(coord)
       return (
-        <div
-          key={`${top}${left}-${idx}`}
-          className="tiny-dot"
-          style={{
-            top: ydistanceFromOrigin - 2,
-            left: xdistanceFromOrigin - 2,
-          }}
-        >
-          <div></div>
-        </div>
-      );
+        <PointRevisited
+          key={`${ydistanceFromOrigin}${xdistanceFromOrigin}-${idx}`}
+          x={xdistanceFromOrigin}
+          y={ydistanceFromOrigin}
+          animationLength={path.length}
+        />
+      )
     });
 
     setRevisitedTrail(revisitedTrail);
@@ -83,8 +75,8 @@ export const TurtleVerse = ({
           fill="transparent"
           stroke="black"
           strokeWidth="4"
-          strokeDasharray={30000}
-          strokeDashoffset={30000}
+          strokeDasharray={path.length + ARBITRARILY_LARGE_NUMBER}
+          strokeDashoffset={path.length + ARBITRARILY_LARGE_NUMBER}
         ></path>
       </svg>
     </div>

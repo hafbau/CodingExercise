@@ -1,4 +1,5 @@
 import React from 'react'
+import 'react-dropzone-uploader/dist/styles.css';
 import './uploader.css'
 import { Dropzone } from '../_external'
 
@@ -22,7 +23,14 @@ export const Uploader = ({ onUploadResponse }) => {
 
   return (
     <section className='uploader'>
+      <h2 className='title'>Upload Turtle travel files here</h2>
+      <em className='subtitle'>You would also see a history of files you've uploaded previously.</em>
       <Dropzone
+        addClassNames={{
+          dropzone: 'dropzone',
+          inputLabelWithFiles: 'add-button'
+        }}
+        SubmitButtonComponent={null}
         getUploadParams={getUploadParams}
         onChangeStatus={handleChangeStatus}
         onSubmit={handleSubmit}
