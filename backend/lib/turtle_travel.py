@@ -2,12 +2,18 @@ from lib.turtle_constants import ORIENTATIONS, ORIENTATION_MAP, DIRECTION
 
 
 class TurtleTravel:
+  '''
+  TurtleTravel packs state and behaviours for moving through a string of directions
+  '''
   def __init__(self, path_tree_factory, point_factory):
     genesis_point = point_factory(0, 0, ORIENTATIONS['up'])
     self.path_tree = path_tree_factory(genesis_point)
     self.point_factory = point_factory
 
   def blast_off(self, direction):
+    '''
+    This is the main method for the turtle to travel through the sequence of string directions
+    '''
     for move in direction:
       current_position = self.make_move(move)
       has_moved = move == DIRECTION['forward']
@@ -16,6 +22,10 @@ class TurtleTravel:
     return self.path_tree
 
   def make_move(self, move):
+    '''
+    This should ideally be private. Method is called by other internal method.
+    Takes move string and returns a list of resulting coordinate and orientation
+    '''
     x, y, orientation = self.path_tree.end_point.entries
     if move == DIRECTION['forward']:
       switcher = self.create_orientation_switch(x, y, orientation)

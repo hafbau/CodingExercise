@@ -1,6 +1,9 @@
 import ast
 
 class PathTree:
+  '''
+  This is a datastructure for storing full paths (stack) and relevant meta data
+  '''
   def __init__(self, genesis_point):
     self.full_path = [
       [genesis_point.x, genesis_point.y]
@@ -16,6 +19,12 @@ class PathTree:
     self.end_point = genesis_point
   
   def add_point(self, point, has_moved):
+    '''
+    takes two arguments - point to add and if point is a forward move.
+    returns void
+    side effects include a. add the point to full_path list b. update the self.visited dict,
+    c. sets the min / max values for x and y and d. updates self.endpoint
+    '''
     if (has_moved):
       self.full_path.append([point.x, point.y])
       self.visited_points[point.path] = self.visited_points.get(point.path, 0) + 1
@@ -28,6 +37,9 @@ class PathTree:
 
   @property
   def grid_props(self):
+    '''
+    getter method - takes no arguments. Returns a dict with grid size parameters
+    '''
     width = self.maxX - self.minX
     height = self.maxY - self.minY
     return {
@@ -44,6 +56,9 @@ class PathTree:
   
   @property
   def revisited_points(self):
+    '''
+    takes no arguments; returns a list of points that have been revisited
+    '''
     return list(map(
       ast.literal_eval,
       [
@@ -52,6 +67,9 @@ class PathTree:
     ))
 
 class Point:
+  '''
+  Point encapsulates x, y coordinates and orientation of a particular point
+  '''
   def __init__(self, x, y, orientation):
     self.x = x
     self.y = y

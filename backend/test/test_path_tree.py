@@ -1,5 +1,5 @@
 import unittest
-from path_tree import PathTree, Point
+from lib.path_tree import PathTree, Point
 
 class TestPathTree(unittest.TestCase):
   def setUp(self):
