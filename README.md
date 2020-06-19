@@ -21,7 +21,8 @@ The repo has three root level folders - two of which are important, the third is
 
 ## To run this app:
 
-- Use the structure of backend/.env.example to create a `.env` file with similar contents. Right now, you could just rename the file from `.env.example` to `.env`
+- Use the structure of `backend/.env.example` to create a `.env` file with similar contents. Right now, you could just rename the file from `.env.example` to `.env`
+- Do the same with the `gui/.env.example`
 
 ### Containerized (Recommended)
 
@@ -34,3 +35,9 @@ docker-compose up
 
 ## How the face looks:
 
+![Demo Screengrab](./demo.gif)
+
+
+## Thanks
+
+Thank you for this, it was fun. Enjoy 🙂.

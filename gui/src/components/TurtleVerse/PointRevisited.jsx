@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
-export const PointRevisited = ({ x, y, animationLength }) => {
+export const PointRevisited = ({ x, y, animationLength: { len, idx } }) => {
   const [display, setDisplay] = useState('none');
-  animationLength = animationLength * 6;// 6 is based off observation of the factor that works best
+  // an algorithm should be derived for the below
+  const animationLength = idx * ( len < 500 ? 100 : (len < 1000 ? 75 : (len < 2100 ? 50 : 35)));
   useEffect(() => {
     const timeout = setTimeout(() => setDisplay('initial'), animationLength);
     return () => clearTimeout(timeout);

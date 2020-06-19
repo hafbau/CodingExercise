@@ -16,9 +16,8 @@ export const TurtleVerse = ({
   path = [],
   revisitedPoints = [],
   grid,
-  animationTime = 15
 }) => {
-  const [svgPathRef, pathLength] = useSvgPathAnimation({ dependencies: [path.length]});
+  const [svgPathRef] = useSvgPathAnimation({ dependencies: [path.length]});
   const {
     originFromLeft,
     originFromTop,
@@ -53,7 +52,7 @@ export const TurtleVerse = ({
           key={`${ydistanceFromOrigin}${xdistanceFromOrigin}-${idx}`}
           x={xdistanceFromOrigin}
           y={ydistanceFromOrigin}
-          animationLength={path.length}
+          animationLength={{len: path.length, idx }}
         />
       )
     });

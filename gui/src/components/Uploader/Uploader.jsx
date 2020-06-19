@@ -5,7 +5,7 @@ import { Dropzone } from '../_external'
 
 // specify upload params and url for your files
 const getUploadParams = () => { 
-  return { url: '/api/v1/path/compute' }
+  return { url: `${process.env.REACT_APP_API_URL}/path/compute` }
 }
   
 // receives array of files that are done uploading when submit button is clicked
