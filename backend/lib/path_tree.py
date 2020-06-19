@@ -38,8 +38,8 @@ class PathTree:
       'width': width,
       'height': height,
       'size': width if (width > height) else height,
-      'originY': self.maxY / height,
-      'originX': self.minX / width,
+      'originY': 0 if height == 0 else self.maxY / height,
+      'originX': 0 if width == 0 else self.minX / width,
     }
   
   @property
