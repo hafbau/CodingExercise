@@ -7,12 +7,16 @@
   transition: all ease 0.5s;
 }
 
-.tiny-dot {
+.turtle {
+  position: absolute;
+}
+
+.tiny-dot-wrapper {
   position: absolute;
   transition: all ease-in 0.5s;
 }
 
-.tiny-dot > div {
+.tiny-dot {
   height: 4px;
   width: 4px;
   border-radius: 50%;

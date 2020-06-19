@@ -10,7 +10,7 @@ export const PointRevisited = ({ x, y, animationLength: { len, idx } }) => {
   }, [animationLength])
   return (
     <div
-      className="tiny-dot"
+      className='tiny-dot-wrapper'
       style={{
         // minus 2 because height and width are 4px in css and 50% offset makes it centralized
         top: y - 2,
@@ -18,7 +18,7 @@ export const PointRevisited = ({ x, y, animationLength: { len, idx } }) => {
         display
       }}
     >
-      <div></div>
+      <div className='tiny-dot'></div>
     </div>
   )
 };

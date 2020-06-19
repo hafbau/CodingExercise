@@ -1,0 +1,31 @@
+.header {
+  margin-bottom: 80px;
+  color: #2c3e50;
+}
+.legend {
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  margin: 0 0 22px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  width: 25%;
+  justify-content: center;
+}
+
+.line {
+  border-bottom: 3px solid #2c3e50;
+  width: 40px;
+}
+
+.legend-item > h6 {
+  margin-left: 20px;
+  text-transform: uppercase;
+}
+
+.start-point .turtle, .end-point .turtle {
+  position: relative;
+}
