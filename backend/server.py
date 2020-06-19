@@ -1,16 +1,15 @@
 import sys
-import aiohttp
 import asyncio
 import uvicorn
 from io import BytesIO
+from decouple import config
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
-from starlette.staticfiles import StaticFiles
 from lib.main import TurtleTravel, path_tree_factory, point_factory
 
 app = Starlette()
-app.add_middleware(CORSMiddleware, allow_origins=['http://localhost:3000'], allow_headers=['X-Requested-With', 'Content-Type'], allow_methods=['GET', 'POST'])
+app.add_middleware(CORSMiddleware, allow_origins=[config('ORIGIN')], allow_headers=['X-Requested-With', 'Content-Type'], allow_methods=['GET', 'POST'])
 
 
 @app.route('/')
@@ -25,7 +24,6 @@ async def compute_path(request):
 
     turtle_voyage = TurtleTravel(path_tree_factory, point_factory)
     path = turtle_voyage.blast_off(direction)
-    print(path.grid_props)
     return JSONResponse({'result': {
         'fullPath': path.full_path,
         'grid': path.grid_props,
